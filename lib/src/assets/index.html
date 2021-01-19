@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Firebase Analytics WebView</title>
+
+    <link rel="stylesheet" href="index.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.2.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.2.0/material.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<h4>Firebase Analytics WebView</h4>
+<button id="event1" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+    Log Event 1
+</button>
+
+<br /><br />
+
+<button id="event2"class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+    Log Event 2
+</button>
+
+<br /><br />
+
+<button id="userprop"class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+    Set User Property
+</button>
+
+<script>
+var standalone = window.navigator.standalone,
+  userAgent = window.navigator.userAgent.toLowerCase(),
+  safari = /safari/.test(userAgent),
+  ios = /iphone|ipod|ipad/.test(userAgent);
+
+var pass_data = {
+    'item_id': "product.id",
+        'item_name': 'product.productName',
+        'item_category': 'product.category',
+        'item_brand': 'product.brand',
+        'item_variant': 'Baju Anak',
+        'price': 'price',
+        //TODO: Still TRigger wrong price --> Check
+        'currency': 'USD',
+        'quantity': 'product.quantity',
+};
+    document.getElementById("event1").addEventListener("click", function() {
+    if (userAgent.includes('wv')) {
+      console.log('Hallo Android')
+      window.flutter_inappwebview.postMessage( JSON.stringify(pass_data) );
+    }
+    else {
+      console.log('Hallo Web')
+      window.postMessage( JSON.stringify(pass_data) );
+    };
+});
+    document.getElementById("event2").addEventListener("click", function() {
+    window.flutter_inappwebview2.postMessage( JSON.stringify(pass_data) );
+});
+
+<!--if (ios) {-->
+<!--  if (!standalone && safari) {-->
+<!--      console.log('Hallo Web')-->
+<!--  } else if (!standalone && !safari) {-->
+<!--      console.log('Hallo IOS')-->
+<!--  };-->
+<!--} else {-->
+<!--  if (userAgent.includes('wv')) {-->
+<!--      console.log('Hallo Android')-->
+<!--  } else {-->
+<!--      console.log('Hallo Web')-->
+<!--  }-->
+<!--};-->
+</script>
+
+<!--<script type="text/javascript" src="index.js"></script>-->
+</body>
+</html>

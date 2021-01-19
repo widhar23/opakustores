@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "32230221113",
+    "firebase_url": "https://mydatabase-b5caa.firebaseio.com",
+    "project_id": "mydatabase-b5caa",
+    "storage_bucket": "mydatabase-b5caa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32230221113:android:d0dda7c7fa8d331e5174e8",
+        "android_client_info": {
+          "package_name": "com.example.opaku"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "32230221113-phptna3tqc348bueks5m47erqlveus09.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjckcyqa6_bCkPcvGdxGiFrsWIjBtll9E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "32230221113-phptna3tqc348bueks5m47erqlveus09.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
