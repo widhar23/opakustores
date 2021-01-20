@@ -234,7 +234,7 @@ class _ProductPageState extends State<ProductPage>
           Container(
             color: kColorWhite,
             width: ConstScreen.setSizeWidth(750),
-            child: Padding(
+            child: SingleChildScrollView(
               padding: EdgeInsets.only(top: 8, bottom: 0, left: 10, right: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -262,7 +262,9 @@ class _ProductPageState extends State<ProductPage>
                     children: <Widget>[
                       //TODO: Price
                       Text(
-                        r'$ '+ Util.intToMoneyType(int.parse(widget.product.price)),
+                        r'$ ' +
+                            Util.intToMoneyType(
+                                int.parse(widget.product.price)),
                         style: TextStyle(
                             fontSize: FontSize.setTextSize(34),
                             color: kColorBlack,
@@ -276,7 +278,8 @@ class _ProductPageState extends State<ProductPage>
                       //TODO: Sale Price
                       Text(
                         (widget.product.salePrice != '0')
-                            ?r'$'+ Util.intToMoneyType(
+                            ? r'$' +
+                                Util.intToMoneyType(
                                     int.parse(widget.product.salePrice))
                             : '',
                         style: TextStyle(
