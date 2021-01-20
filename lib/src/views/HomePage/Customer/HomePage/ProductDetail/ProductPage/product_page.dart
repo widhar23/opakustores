@@ -231,195 +231,205 @@ class _ProductPageState extends State<ProductPage>
           ),
 
 // TODO:            Bottom
-          Container(
-            color: kColorWhite,
-            width: ConstScreen.setSizeWidth(750),
-            child: SingleChildScrollView(
-              padding: EdgeInsets.only(top: 8, bottom: 0, left: 10, right: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  //TODO: Product name
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          widget.product.productName,
-                          style: TextStyle(
-                            fontSize: FontSize.setTextSize(40),
-                            fontWeight: FontWeight.w800,
-                            color: kColorBlack,
+          Flexible(
+            child: Container(
+              color: kColorWhite,
+              width: ConstScreen.setSizeWidth(750),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                padding:
+                    EdgeInsets.only(top: 8, bottom: 0, left: 10, right: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    //TODO: Product name
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            widget.product.productName,
+                            style: TextStyle(
+                              fontSize: FontSize.setTextSize(40),
+                              fontWeight: FontWeight.w800,
+                              color: kColorBlack,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  //TODO: Price
-                  Row(
-                    children: <Widget>[
-                      //TODO: Price
-                      Text(
-                        r'$ ' +
-                            Util.intToMoneyType(
-                                int.parse(widget.product.price)),
-                        style: TextStyle(
-                            fontSize: FontSize.setTextSize(34),
-                            color: kColorBlack,
-                            decoration: (widget.product.salePrice != '0')
-                                ? TextDecoration.lineThrough
-                                : TextDecoration.none),
-                      ),
-                      SizedBox(
-                        width: ConstScreen.setSizeHeight(20),
-                      ),
-                      //TODO: Sale Price
-                      Text(
-                        (widget.product.salePrice != '0')
-                            ? r'$' +
-                                Util.intToMoneyType(
-                                    int.parse(widget.product.salePrice))
-                            : '',
-                        style: TextStyle(
-                            fontSize: FontSize.setTextSize(34),
-                            color: kColorRed),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: ConstScreen.setSizeHeight(5),
-                  ),
-                  //TODO: Color and Size Picker
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 4,
-                        child: renderColorBar(),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: StreamBuilder(
-                            stream: _controller.sizeStream,
-                            builder: (context, snapshot) {
-                              return DropdownButton(
-                                isExpanded: true,
-                                style: TextStyle(fontSize: FontSize.s30),
-                                value: sizeValue,
-                                hint: (snapshot.hasError)
-                                    ? Text(
-                                        snapshot.error,
-                                        style: kBoldTextStyle.copyWith(
-                                            color: kColorRed),
-                                      )
-                                    : Text('Select size'),
-                                onChanged: (value) {
-                                  setState(() {
-                                    sizeValue = value;
-                                  });
-                                },
-                                items: _sizeList.map((value) {
-                                  return DropdownMenuItem(
-                                    child: Text(
-                                      'Size ' + value,
-                                      style: TextStyle(
-                                          color: kColorBlack,
-                                          fontSize: FontSize.s30),
-                                    ),
-                                    value: value,
-                                  );
-                                }).toList(),
-                              );
-                            }),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: ConstScreen.setSizeHeight(50),
-                  ),
-                  // TODO: Button Add
-                  _isSoldOut
-                      ? soldOutWidget()
-                      : CusRaisedButton(
-                          title: 'ADD',
-                          backgroundColor: kColorBlack,
-                          isDisablePress: _isAddBtnPress,
-                          onPress: () async {
-                            //TODO: check logging
-                            if (_isLogging) {
-                              setState(() {
-                                _isAddBtnPress = false;
-                              });
-                              //TODO: Add product
-                              await _controller
-                                  .addProductToCart(
-                                      color: colorValue,
-                                      size: sizeValue,
-                                      product: widget.product)
-                                  .then((isComplete) {
-                                if (isComplete != null) {
-                                  if (isComplete) {
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      backgroundColor: kColorWhite,
-                                      content: Row(
-                                        children: <Widget>[
-                                          Icon(
-                                            Icons.check,
-                                            color: kColorGreen,
-                                            size: ConstScreen.setSizeWidth(50),
-                                          ),
-                                          SizedBox(
-                                            width: ConstScreen.setSizeWidth(20),
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              'Product has been add to Your Cart.',
-                                              style: kBoldTextStyle.copyWith(
-                                                  fontSize: FontSize.s28),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ));
-                                  } else {
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      backgroundColor: kColorWhite,
-                                      content: Row(
-                                        children: <Widget>[
-                                          Icon(
-                                            Icons.error,
-                                            color: kColorRed,
-                                            size: ConstScreen.setSizeWidth(50),
-                                          ),
-                                          SizedBox(
-                                            width: ConstScreen.setSizeWidth(20),
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              'Added error.',
-                                              style: kBoldTextStyle.copyWith(
-                                                  fontSize: FontSize.s28),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ));
-                                  }
-                                }
-                                setState(() {
-                                  _isAddBtnPress = true;
-                                });
-                              });
-                            } else {
-                              Navigator.pushNamed(context, 'register_screen');
-                            }
-                          },
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    //TODO: Price
+                    Row(
+                      children: <Widget>[
+                        //TODO: Price
+                        Text(
+                          r'$ ' +
+                              Util.intToMoneyType(
+                                  int.parse(widget.product.price)),
+                          style: TextStyle(
+                              fontSize: FontSize.setTextSize(34),
+                              color: kColorBlack,
+                              decoration: (widget.product.salePrice != '0')
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none),
                         ),
-                ],
+                        SizedBox(
+                          width: ConstScreen.setSizeHeight(20),
+                        ),
+                        //TODO: Sale Price
+                        Text(
+                          (widget.product.salePrice != '0')
+                              ? r'$' +
+                                  Util.intToMoneyType(
+                                      int.parse(widget.product.salePrice))
+                              : '',
+                          style: TextStyle(
+                              fontSize: FontSize.setTextSize(34),
+                              color: kColorRed),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: ConstScreen.setSizeHeight(5),
+                    ),
+                    //TODO: Color and Size Picker
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          flex: 4,
+                          child: renderColorBar(),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: StreamBuilder(
+                              stream: _controller.sizeStream,
+                              builder: (context, snapshot) {
+                                return DropdownButton(
+                                  isExpanded: true,
+                                  style: TextStyle(fontSize: FontSize.s30),
+                                  value: sizeValue,
+                                  hint: (snapshot.hasError)
+                                      ? Text(
+                                          snapshot.error,
+                                          style: kBoldTextStyle.copyWith(
+                                              color: kColorRed),
+                                        )
+                                      : Text('Select size'),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      sizeValue = value;
+                                    });
+                                  },
+                                  items: _sizeList.map((value) {
+                                    return DropdownMenuItem(
+                                      child: Text(
+                                        'Size ' + value,
+                                        style: TextStyle(
+                                            color: kColorBlack,
+                                            fontSize: FontSize.s30),
+                                      ),
+                                      value: value,
+                                    );
+                                  }).toList(),
+                                );
+                              }),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: ConstScreen.setSizeHeight(50),
+                    ),
+                    // TODO: Button Add
+                    _isSoldOut
+                        ? soldOutWidget()
+                        : CusRaisedButton(
+                            title: 'ADD',
+                            backgroundColor: kColorBlack,
+                            isDisablePress: _isAddBtnPress,
+                            onPress: () async {
+                              //TODO: check logging
+                              if (_isLogging) {
+                                setState(() {
+                                  _isAddBtnPress = false;
+                                });
+                                //TODO: Add product
+                                await _controller
+                                    .addProductToCart(
+                                        color: colorValue,
+                                        size: sizeValue,
+                                        product: widget.product)
+                                    .then((isComplete) {
+                                  if (isComplete != null) {
+                                    if (isComplete) {
+                                      Scaffold.of(context)
+                                          .showSnackBar(SnackBar(
+                                        backgroundColor: kColorWhite,
+                                        content: Row(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.check,
+                                              color: kColorGreen,
+                                              size:
+                                                  ConstScreen.setSizeWidth(50),
+                                            ),
+                                            SizedBox(
+                                              width:
+                                                  ConstScreen.setSizeWidth(20),
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                'Product has been add to Your Cart.',
+                                                style: kBoldTextStyle.copyWith(
+                                                    fontSize: FontSize.s28),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ));
+                                    } else {
+                                      Scaffold.of(context)
+                                          .showSnackBar(SnackBar(
+                                        backgroundColor: kColorWhite,
+                                        content: Row(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.error,
+                                              color: kColorRed,
+                                              size:
+                                                  ConstScreen.setSizeWidth(50),
+                                            ),
+                                            SizedBox(
+                                              width:
+                                                  ConstScreen.setSizeWidth(20),
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                'Added error.',
+                                                style: kBoldTextStyle.copyWith(
+                                                    fontSize: FontSize.s28),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ));
+                                    }
+                                  }
+                                  setState(() {
+                                    _isAddBtnPress = true;
+                                  });
+                                });
+                              } else {
+                                Navigator.pushNamed(context, 'register_screen');
+                              }
+                            },
+                          ),
+                  ],
+                ),
               ),
             ),
-          ),
+          )
         ],
       ),
     );
